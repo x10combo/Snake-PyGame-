@@ -281,7 +281,7 @@ def show_credits():
             "Gameplay: Ledion",
             "Menus, UI Functionality and Game Art: Rakel",
             "Tracking and Documentation: Enkel",
-            "Something idk: Serki and Xhoni",
+            "Additional menus and extra features: Serki and Xhoni",
             "Press any button to go back to the main screen.",
             "Thank you for playing."
         ]
