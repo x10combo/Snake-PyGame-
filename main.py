@@ -1,7 +1,18 @@
 import pygame
 import sys
+import os
 import random
 from pygame.math import Vector2
+
+SCREEN = pygame.display.set_mode((1280, 720))
+BACKGROUND_IMAGE = pygame.image.load(os.path.join("Graphics", "Background.png")).convert()
+pygame.display.set_caption("Menu")
+
+BG = pygame.image.load("Graphics/Background.png")
+
+
+def get_font(size):
+    return pygame.font.Font("Graphics/font.ttf", size)
 
 
 class SNAKE:
@@ -178,6 +189,9 @@ class Main:
 
 
 def main_menu():
+    background = pygame.image.load("Graphics/Background.png").convert()
+    background = pygame.transform.scale(background, (cell_number * cell_size, cell_number * cell_size))
+    screen.blit(background, (0, 0))
     while True:
         for event_main in pygame.event.get():
             if event_main.type == pygame.QUIT:
@@ -196,6 +210,7 @@ def main_menu():
         draw_main_menu()
         pygame.display.update()
         clock.tick(60)
+
 
 def game_loop():
     main_game = Main()
@@ -243,20 +258,20 @@ def draw_main_menu():
     screen.blit(title_text, title_rect)
 
     play_button = pygame.Rect(cell_number * cell_size // 2 - 75, cell_number * cell_size // 2, 150, 50)
-    pygame.draw.rect(screen, (56, 74, 12), play_button)
-    play_text = game_font.render("Play", True, (175, 215, 70))
+    pygame.draw.rect(screen, (128, 128, 128), play_button)  # Grey background
+    play_text = game_font.render("Play", True, (255, 255, 255))  # White text
     play_text_rect = play_text.get_rect(center=play_button.center)
     screen.blit(play_text, play_text_rect)
 
     credits_button = pygame.Rect(cell_number * cell_size // 2 - 75, cell_number * cell_size // 2 + 100, 150, 50)
-    pygame.draw.rect(screen, (56, 74, 12), credits_button)
-    credits_text = game_font.render("Credits", True, (175, 215, 70))
+    pygame.draw.rect(screen, (128, 128, 128), credits_button)  # Grey background
+    credits_text = game_font.render("Credits", True, (255, 255, 255))  # White text
     credits_text_rect = credits_text.get_rect(center=credits_button.center)
     screen.blit(credits_text, credits_text_rect)
 
     quit_button = pygame.Rect(cell_number * cell_size // 2 - 75, cell_number * cell_size // 2 + 200, 150, 50)
-    pygame.draw.rect(screen, (56, 74, 12), quit_button)
-    quit_text = game_font.render("Quit", True, (175, 215, 70))
+    pygame.draw.rect(screen, (128, 128, 128), quit_button)  # Grey background
+    quit_text = game_font.render("Quit", True, (255, 255, 255))  # White text
     quit_text_rect = quit_text.get_rect(center=quit_button.center)
     screen.blit(quit_text, quit_text_rect)
 
@@ -264,6 +279,13 @@ def draw_main_menu():
     play_button_rect = play_button
     credits_button_rect = credits_button
     quit_button_rect = quit_button
+
+    if play_button_rect.collidepoint(pygame.mouse.get_pos()):
+        play_text = game_font.render("Play", True, (255, 255, 255))
+    if credits_button_rect.collidepoint(pygame.mouse.get_pos()):
+        credits_text = game_font.render("Credits", True, (255, 255, 255))
+    if quit_button_rect.collidepoint(pygame.mouse.get_pos()):
+        quit_text = game_font.render("Quit", True, (255, 255, 255))
 
 
 def show_credits():
