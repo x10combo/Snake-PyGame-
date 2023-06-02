@@ -4,7 +4,9 @@ import os
 import random
 from pygame.math import Vector2
 
-SCREEN = pygame.display.set_mode((1280, 720))
+screen_width = 860
+screen_height = 720
+SCREEN = pygame.display.set_mode((screen_width, screen_height))
 BACKGROUND_IMAGE = pygame.image.load(os.path.join("Graphics", "Background.png")).convert()
 pygame.display.set_caption("Menu")
 
@@ -124,6 +126,7 @@ class Main:
     def __init__(self):
         self.snake = SNAKE()
         self.fruit = FRUIT()
+        self.fail = False
 
     def update(self):
         self.snake.move_snake()
@@ -151,8 +154,31 @@ class Main:
                 self.game_over()
 
     def game_over(self):
-        pygame.quit()
-        sys.exit()
+        game_over_font = pygame.font.Font(None, 75)
+        game_over_text = game_over_font.render("Game Over", True, (255, 255, 255))
+        game_over_text_rect = game_over_text.get_rect(center=(screen_width // 2, screen_height // 2))
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
+                        pygame.quit()
+                        sys.exit()
+                    if event.key == pygame.K_r:
+                        return
+
+            screen.fill((175, 215, 70))
+            screen.blit(game_over_text, game_over_text_rect)
+
+            quit_text = game_font.render("Press 'Q' to Quit", True, (56, 74, 12))
+            quit_rect = quit_text.get_rect(center=(screen_width // 2, screen_height // 2 + 50))
+            screen.blit(quit_text, quit_rect)
+
+            pygame.display.update()
+            clock.tick(60)
 
     def fruit_spawn(self):
         while self.fruit.pos in self.snake.body:
