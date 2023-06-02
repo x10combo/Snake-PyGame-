@@ -3,12 +3,15 @@ import sys
 import os
 import random
 from pygame.math import Vector2
+from pygame import  mixer
 
 screen_width = 860
 screen_height = 720
 SCREEN = pygame.display.set_mode((screen_width, screen_height))
 BACKGROUND_IMAGE = pygame.image.load(os.path.join("Graphics", "Background.png")).convert()
-pygame.display.set_caption("Menu")
+mixer.init()
+mixer.music.load('audio/BGM2.mp3')
+mixer.music.play()
 
 BG = pygame.image.load("Graphics/Background.png")
 
@@ -40,7 +43,8 @@ class SNAKE:
         self.bodytl = pygame.image.load('Graphics/body_topleft.png').convert_alpha()
         self.bodybr = pygame.image.load('Graphics/body_bottomright.png').convert_alpha()
         self.bodybl = pygame.image.load('Graphics/body_bottomleft.png').convert_alpha()
-
+        self.crunch_sound = pygame.mixer.Sound('Audio/EatingSound.mp3')
+        
     def draw_snake(self):
         self.update_head_graphics()
         self.update_tail_graphics()
@@ -107,6 +111,9 @@ class SNAKE:
     def add_block(self):
         self.new_block = True
 
+    def play_eating_sound(self):
+        self.crunch_sound.play()
+
 
 class FRUIT:
     def __init__(self):
@@ -144,6 +151,7 @@ class Main:
             self.fruit.randomize()
             self.snake.add_block()
             self.fruit_spawn()
+            self.snake.play_eating_sound()
 
     def check_fail(self):
         if not 0 <= self.snake.body[0].x < cell_number or not 0 <= self.snake.body[0].y < cell_number:
@@ -352,7 +360,7 @@ def show_credits():
         pygame.display.update()
         clock.tick(60)
 
-
+pygame.mixer.pre_init(44100, -16,2,512)
 pygame.init()
 cell_size = 40
 cell_number = 20
