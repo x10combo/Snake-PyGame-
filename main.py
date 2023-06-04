@@ -44,7 +44,7 @@ class SNAKE:
         self.bodybr = pygame.image.load('Graphics/body_bottomright.png').convert_alpha()
         self.bodybl = pygame.image.load('Graphics/body_bottomleft.png').convert_alpha()
         self.crunch_sound = pygame.mixer.Sound('Audio/EatingSound.mp3')
-        
+
     def draw_snake(self):
         self.update_head_graphics()
         self.update_tail_graphics()
