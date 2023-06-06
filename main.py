@@ -8,12 +8,10 @@ from pygame import  mixer
 screen_width = 860
 screen_height = 720
 SCREEN = pygame.display.set_mode((screen_width, screen_height))
-BACKGROUND_IMAGE = pygame.image.load(os.path.join("Graphics", "Background.png")).convert()
 mixer.init()
 mixer.music.load('audio/BGM2.mp3')
 mixer.music.play()
 
-BG = pygame.image.load("Graphics/Background.png")
 
 
 def get_font(size):
